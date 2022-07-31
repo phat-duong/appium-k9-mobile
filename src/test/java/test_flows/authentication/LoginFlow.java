@@ -5,6 +5,7 @@ import io.appium.java_client.MobileElement;
 import models.components.login.LoginFormComponent;
 import models.pages.LoginScreen;
 import org.apache.commons.validator.routines.EmailValidator;
+import org.testng.Assert;
 import test_flows.BaseFlow;
 
 public class LoginFlow extends BaseFlow {
@@ -41,7 +42,7 @@ public class LoginFlow extends BaseFlow {
         boolean isPasswordValid = password.length() >=8;
 
         if(isEmailValid && isPasswordValid){
-            verifyCorrectLoginCreds(loginFormComp);
+            verifyCorrectLoginCreds();
         }
 
         if(!isEmailValid){
@@ -54,25 +55,20 @@ public class LoginFlow extends BaseFlow {
     }
 
     // TODO: Homework
-    private void verifyCorrectLoginCreds(LoginFormComponent loginFormComp) {
-        String actualMsg = loginFormComp.getSuccessMsg();
-        String expectedMsg = "Success";
+    private void verifyCorrectLoginCreds() {
+        System.out.println("Verifying correct login creds");
     }
 
     private void verifyIncorrectEmail(LoginFormComponent loginFormComp) {
         String actualInvalidEmailStr = loginFormComp.getInvalidEmailStr();
         String expectedInvalidEmailStr = "Please enter a valid email address";
-
-        System.out.println("actualInvalidEmailStr: " + actualInvalidEmailStr);
-        System.out.println("expectedInvalidEmailStr: " + expectedInvalidEmailStr);
+        Assert.assertEquals(actualInvalidEmailStr, expectedInvalidEmailStr, "[ERR] Invalid email str is not correct");
     }
 
     private void verifyIncorrectPassword(LoginFormComponent loginFormComp) {
         String actualInvalidPasswordStr = loginFormComp.getInvalidPasswordStr();
         String expectedInvalidPasswordStr = "Please enter at least 8 characters";
-
-        System.out.println("actualInvalidPasswordStr: " + actualInvalidPasswordStr);
-        System.out.println("expectedInvalidPasswordStr: " + expectedInvalidPasswordStr);
+        Assert.assertEquals(actualInvalidPasswordStr, expectedInvalidPasswordStr, "[ERR] Invalid password str is not correct");
     }
 
 }
