@@ -5,20 +5,40 @@ import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.MobileElement;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
+import org.testng.annotations.Parameters;
 import platform.Platform;
 
-    public class BaseTest {
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
-        protected static AppiumDriver<MobileElement> appiumDriver;
+public class BaseTest {
 
-        @BeforeTest
-        public void initAppiumSession(){
-            appiumDriver = DriverFactory.getDriver(Platform.ANDROID);
-        }
+    private static final List<DriverFactory> driverThreadPool = Collections.synchronizedList(new ArrayList<>());
+    private static ThreadLocal<DriverFactory> driverThread;
 
-        @AfterTest(alwaysRun = true)
-        public void quitAppiumSession(){
-            appiumDriver.quit();
-        }
+    private String udid;
+    private String systemPort;
+
+    protected AppiumDriver<MobileElement> getDriver(){
+        return driverThread.get().getDriver(Platform.ANDROID, udid, systemPort);
     }
+
+    @BeforeTest
+    @Parameters({"udid", "systemPort"})
+    public void initAppiumSession(String udid, String systemPort){
+        this.udid = udid;
+        this.systemPort = systemPort;
+        driverThread = ThreadLocal.withInitial(() -> {
+            DriverFactory driverThread = new DriverFactory();
+            driverThreadPool.add(driverThread);
+            return driverThread;
+        });
+    }
+
+    @AfterTest(alwaysRun = true)
+    public void quitAppiumSession(){
+        driverThread.get().quitAppiumDriver();
+    }
+}
 
