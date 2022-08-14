@@ -5,7 +5,6 @@ import driver.DriverFactory;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.MobileBy;
 import io.appium.java_client.MobileElement;
-import org.openqa.selenium.By;
 import platform.Platform;
 
 import java.time.Duration;
@@ -14,7 +13,7 @@ public class HandleMultipleApps {
 
     public static void main(String[] args) {
 
-        AppiumDriver<MobileElement> appiumDriver = DriverFactory.getDriver(Platform.ANDROID);
+        AppiumDriver<MobileElement> appiumDriver = DriverFactory.getDriver(Platform.android);
 
         try {
             // Navigate to Login screen
