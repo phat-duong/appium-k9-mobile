@@ -19,7 +19,7 @@ public class DriverFactory implements MobileCapabilityTypeEx {
         DesiredCapabilities desiredCapabilities = new DesiredCapabilities();
         desiredCapabilities.setCapability(PLATFORM_NAME, "Android");
         desiredCapabilities.setCapability(AUTOMATION_NAME, "uiautomator2");
-        desiredCapabilities.setCapability(UDID, "3300d3672cca62b9");
+        desiredCapabilities.setCapability(UDID, "RF8N51VVZ0A");
         desiredCapabilities.setCapability(APP_PACKAGE, "com.wdiodemoapp");
         desiredCapabilities.setCapability(APP_ACTIVITY, "com.wdiodemoapp.MainActivity");
         URL appiumServer = null;
@@ -49,16 +49,26 @@ public class DriverFactory implements MobileCapabilityTypeEx {
     }
 
     public AppiumDriver<MobileElement> getDriver(Platform platform, String udid, String systemPort, String platformVersion) {
+        String remoteInfoViaEnvVar = System.getenv("env");
+        String remoteInfoViaCommandVar = System.getProperty("env");
+        String isRemote = remoteInfoViaEnvVar == null ? remoteInfoViaCommandVar : remoteInfoViaEnvVar;
+
+        if(isRemote == null){
+            throw new IllegalArgumentException("Please provide env variable [env]!");
+        }
+
+        String targetServer = "https://localhost:4723/wd/hub";
+        if(isRemote.equals("true")){
+            String hubIPAdd = System.getenv("hub");
+            if(hubIPAdd == null) hubIPAdd = System.getProperty("hub");
+            if(hubIPAdd == null){
+                throw new IllegalArgumentException("Please provide hub ip address via env variable [hub]!");
+            }
+            targetServer = hubIPAdd + ":4444/wd/hub";
+        }
+
         if(appiumDriver == null) {
-//            DesiredCapabilities desiredCapabilities = new DesiredCapabilities();
-//            desiredCapabilities.setCapability(PLATFORM_NAME, "Android");
-//            desiredCapabilities.setCapability(AUTOMATION_NAME, "uiautomator2");
-//            desiredCapabilities.setCapability(UDID, udid);
-//            desiredCapabilities.setCapability(APP_PACKAGE, "com.wdiodemoapp");
-//            desiredCapabilities.setCapability(APP_ACTIVITY, "com.wdiodemoapp.MainActivity");
-//            desiredCapabilities.setCapability(SYSTEM_PORT, systemPort);
             URL appiumServer = null;
-            String targetServer = "http://192.168.100.2:4444/wd/hub";
             try {
                 appiumServer = new URL(targetServer);
             } catch (Exception e) {
@@ -68,7 +78,7 @@ public class DriverFactory implements MobileCapabilityTypeEx {
             if (appiumServer == null)
                 throw new RuntimeException("Can't connect to selenium grid.");
 
-            //Desired Capabilities
+            // Desired Capabilities
             DesiredCapabilities desiredCaps = new DesiredCapabilities();
             desiredCaps.setCapability(PLATFORM_NAME, platform);
 
