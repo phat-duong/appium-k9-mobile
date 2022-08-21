@@ -1,4 +1,4 @@
-package tests.authen;
+package api_learning.authen_exploring;
 
 import driver.DriverFactory;
 import io.appium.java_client.AppiumDriver;
@@ -30,7 +30,7 @@ public class LoginTestWithDataBuilder {
 
     @DataProvider
     public LoginCred[] loginCredData() {
-        String filePath = "/src/test/java/test_data/authen/LoginCreds.json";
+        String filePath = "/src/main/java/test_data/authen/LoginCreds.json";
         return DataObjectBuilder.buildDataObject(filePath, LoginCred[].class);
     }
 

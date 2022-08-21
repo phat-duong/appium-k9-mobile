@@ -8,11 +8,11 @@
     <parameter name="systemPort" value="8882"/>
     <classes>
         <class name="tests.form.FormTest"/>
-        <class name="tests.parallel.Login"/>
-        <class name="tests.gson.TestGSON"/>
-        <class name="tests.testng.TestNGHooks02"/>
-        <class name="tests.testng.BaseTestNG"/>
-        <class name="tests.testng.Verifier"/>
+        <class name="api_learning.parallel.Login"/>
+        <class name="api_learning.gson.TestGSON"/>
+        <class name="api_learning.testng.TestNGHooks02"/>
+        <class name="api_learning.testng.BaseTestNG"/>
+        <class name="api_learning.testng.Verifier"/>
     </classes>
 </test> <!-- RF8N51VVZ0A -->
 <test thread-count="10" parallel="tests" name="QV7112BS3F">
@@ -21,12 +21,12 @@
     <parameter name="platformName" value="android"/>
     <parameter name="systemPort" value="8562"/>
     <classes>
-        <class name="tests.testng.TestParameter02"/>
-        <class name="tests.testng.TestParameter"/>
-        <class name="tests.testng.TestNGHooks01"/>
-        <class name="tests.authen.LoginTestWithDataBuilder"/>
-        <class name="tests.authen.LoginTestWithDataProvider"/>
-        <class name="tests.authen.LoginTest"/>
+        <class name="api_learning.testng.TestParameter02"/>
+        <class name="api_learning.testng.TestParameter"/>
+        <class name="api_learning.testng.TestNGHooks01"/>
+        <class name="api_learning.authen_exploring.LoginTestWithDataBuilder"/>
+        <class name="api_learning.authen_exploring.LoginTestWithDataProvider"/>
+        <class name="api_learning.authen_exploring.LoginTest"/>
         <class name="tests.authen.LoginTestWithBaseTest"/>
     </classes>
 </test> <!-- QV7112BS3F -->
